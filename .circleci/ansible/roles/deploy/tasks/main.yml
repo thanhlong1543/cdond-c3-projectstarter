@@ -27,15 +27,22 @@
     dest: ~/backend-service
 
 - name: "starting nodejs app with PM2"
-  become: true
   shell: |
     cd ~/backend-service
     npm i
     pm2 stop default
     pm2 start npm --name "backend-udacity" -- start
-    cd dist
-    pm2 start main.js --update-env
   register: starting_node
+
+- name: print message
+  debug:
+    msg: "{{ starting_node.stdout_lines }}"
+
+- name: "restarting nodejs app with PM2"
+  shell: |
+    cd ~/backend-service/dist
+    pm2 start main.js --update-env
+  register: restarting_node
 
 - name: print message
   debug:
