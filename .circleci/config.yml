@@ -73,7 +73,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [ frontend-test ]
+          keys: [ frontend-build ]
       - run:
           name: run front-end test
           command: |
@@ -87,7 +87,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [ backend-test ]
+          keys: [ backend-build ]
       - run:
           name: run Back-end test
           command: |
@@ -152,6 +152,10 @@ jobs:
                 --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  \
                 --tags project=udapeople
       - run:
+          name: Install tar utility
+          command: |
+            yum install -y tar gzip
+      - run:
           name: Add back-end ip to ansible inventory
           command: |
             aws ec2 describe-instances \
@@ -159,6 +163,7 @@ jobs:
                   --query 'Reservations[*].Instances[*].PublicIpAddress' \
                   --filters "Name=tag:Project,Values=udacity" \
                   --output text >> .circleci/ansible/inventory.txt
+            cat .circleci/ansible/inventory.txt
       - persist_to_workspace:
           root: ~/
           paths:
