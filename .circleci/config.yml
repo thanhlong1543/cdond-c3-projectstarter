@@ -232,7 +232,7 @@ jobs:
 
   deploy-frontend:
     docker:
-      - image: circleci/node:13.8.0
+      - image: python:3.7-alpine3.11
     steps:
       - checkout
       - restore_cache:
@@ -242,9 +242,8 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            sudo apt install curl
-            yum install -y tar gzip
-      - install_cli
+            apk add --update --no-cache tar gzip nodejs npm tree
+            pip3 install awscli
       - run:
           name: Get backend url
           command: |
