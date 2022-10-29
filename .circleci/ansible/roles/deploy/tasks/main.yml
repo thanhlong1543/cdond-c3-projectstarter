@@ -31,19 +31,11 @@
     cd ~/backend-service
     npm i
     pm2 stop default
-    pm2 start npm --name "backend-udacity" -- start
+    sudo npm run build
+    sudo pm2 start npm --name backend -- start
   register: starting_node
 
 - name: print message
   debug:
     msg: "{{ starting_node.stdout_lines }}"
 
-- name: "restarting nodejs app with PM2"
-  shell: |
-    cd ~/backend-service/dist
-    pm2 start main.js --update-env
-  register: restarting_node
-
-- name: print message
-  debug:
-    msg: "{{ starting_node.stdout_lines }}"
