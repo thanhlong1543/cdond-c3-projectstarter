@@ -1,2 +1,4 @@
 URL01: https://github.com/thanhlong1543/cdond-c3-projectstarter
 URL02=http://udapeople-afdb6a2.s3-website-us-east-1.amazonaws.com/
+URL03: d3ag8xne4swjwj.cloudfront.net
+URL04: https://:3030/api/status
