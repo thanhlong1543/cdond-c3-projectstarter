@@ -9,19 +9,14 @@
     src: artifact.tar.gz
     dest: ~/backend-service
 
-- name: "Executing Node app with PM2"
+- name: "starting nodejs app with PM2"
   shell: |
     cd ~/backend-service
     npm i
     pm2 stop default
     pm2 start npm -- start
-  register: execute_node
+  register: starting_node
 
 - name: print message
   debug:
-    msg: "{{ execute_node.stdout_lines }}"
-
-- name: "Configure pm2 to start as service"
-  become: true
-  shell: |
-    env PATH=$PATH:/usr/local/bin pm2 startup systemd -u ubuntu --hp /home/ubuntu
+    msg: "{{ starting_node.stdout_lines }}"
