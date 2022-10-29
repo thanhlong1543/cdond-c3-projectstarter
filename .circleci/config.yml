@@ -242,7 +242,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update --no-cache tar gzip nodejs npm tree
+            apk add --update --no-cache tar gzip nodejs npm tree curl
             pip3 install awscli
       - run:
           name: Get backend url
@@ -268,10 +268,9 @@ jobs:
 
   deploy-backend:
     docker:
-      - image: circleci/node:13.8.0
+      - image: python:3.7-alpine3.11
     steps:
       - checkout
-      - install_cli
       - add_ssh_keys:
           fingerprints: [ "ab:fc:12:70:8d:e7:4f:91:fc:cd:f0:12:79:e2:27:0e" ]
       - restore_cache:
@@ -281,13 +280,8 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            sudo apt install curl
-            yum install -y tar gzip
-            sudo apt install gzip
-            sudo apt update
-            sudo apt install software-properties-common -y
-            sudo add-apt-repository --yes --update ppa:ansible/ansible
-            sudo apt install ansible -y
+            apk add --update --no-cache tar gzip nodejs npm tree ansible curl
+            pip3 install awscli
       - run:
           name: Deploy backend
           command: |
@@ -386,8 +380,8 @@ workflows:
           requires: [configure-infrastructure]
       - deploy-frontend:
           requires: [run-migrations]
-#      - deploy-backend:
-#          requires: [run-migrations]
+      - deploy-backend:
+          requires: [run-migrations]
 #      - smoke-test:
 #          requires: [deploy-backend, deploy-frontend]
 #      - cloudfront-update:
