@@ -298,8 +298,9 @@ jobs:
             echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> "backend/.env"
             echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> "backend/.env"
             echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> "backend/.env"
-            cat backend/.env
             cd backend
+            echo "Contents  of the .env file is -------"
+            cat .env
             npm i
             npm run build
             cd ..
@@ -350,8 +351,8 @@ jobs:
             else
             exit 1
             fi
-      - destroy-environment
-      - revert-migrations
+#      - destroy-environment
+#      - revert-migrations
 
 #  cloudfront-update:
 #    docker:
