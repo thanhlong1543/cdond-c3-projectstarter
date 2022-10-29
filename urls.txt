@@ -1,2 +1,2 @@
-github: https://github.com/thanhlong1543/cdond-c3-projectstarter
-API_URL=http://3.83.207.30:3030
+URL01: https://github.com/thanhlong1543/cdond-c3-projectstarter
+URL02=http://udapeople-afdb6a2.s3-website-us-east-1.amazonaws.com/
